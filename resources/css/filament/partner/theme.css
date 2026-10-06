@@ -1,0 +1,96 @@
+@import '../admin/theme.css';
+
+/* Suppress browser autofill blue/yellow background on partner panel inputs */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+    -webkit-text-fill-color: #111827 !important;
+}
+
+.dark input:-webkit-autofill,
+.dark input:-webkit-autofill:hover,
+.dark input:-webkit-autofill:focus,
+.dark input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px rgb(17 24 39) inset !important;
+    -webkit-text-fill-color: rgb(249 250 251) !important;
+}
+
+
+.fi-select-input .fi-dropdown-panel {
+    max-width: none !important;
+    min-width: 220px !important;
+}
+/* Joined Phone Input Styles for Custom View */
+.joined-select-container .fi-input-wrp,
+.joined-input-container .fi-input-wrp {
+    box-shadow: none !important;
+    border: none !important;
+    --tw-ring-shadow: 0 0 #000 !important;
+    --tw-ring-color: transparent !important;
+    background-color: transparent !important;
+}
+
+/* Ensure focus states on inner inputs don't add borders */
+.joined-select-container .fi-input-wrp:focus-within,
+.joined-input-container .fi-input-wrp:focus-within {
+    box-shadow: none !important;
+    border: none !important;
+    --tw-ring-shadow: 0 0 #000 !important;
+    --tw-ring-color: transparent !important;
+}
+
+/* Hide country name and code when selected (only show flag) */
+.phone-dial-code .dial-country-name,
+.phone-dial-code .dial-country-code {
+    display: none;
+}
+.phone-dial-code .fi-dropdown-panel .dial-country-name,
+.phone-dial-code .fi-dropdown-panel .dial-country-code {
+    display: inline;
+}
+
+/* Match FusedGroup outer ring color with custom input ring color */
+.fi-sc-fused-group > .fi-sc:not(:focus-within):not(.fi-invalid) {
+    --tw-ring-color: #555555 !important;
+}
+:is(.dark .fi-sc-fused-group > .fi-sc:not(:focus-within):not(.fi-invalid)) {
+    --tw-ring-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* Match the divider color inside FusedGroup to be slightly softer but consistent */
+.fi-sc-fused-group > .fi-sc {
+    border-radius: 8px !important;
+}
+
+/* Auto-size the left side based on its natural content without forcing a strict pixel width */
+.phone-fused-group > .fi-sc {
+    grid-template-columns: max-content 1fr !important;
+}
+
+/* Give the button natural padding and flex layout */
+.phone-fused-group .fi-select-input-btn {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    padding: 0 12px !important;
+}
+
+.phone-fused-group .fi-select-input-value-ctn {
+    flex: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+/* Protect the arrow from shrinking and give it a natural margin */
+.phone-fused-group .fi-input-wrp-suffix {
+    flex-shrink: 0 !important;
+    margin-left: 8px !important;
+}
+
+/* Add left padding to the inline prefix (+1) so it doesn't touch the divider */
+.phone-fused-group .fi-sc > :last-child .fi-input-wrp-prefix {
+    padding-left: 0.75rem !important;
+}

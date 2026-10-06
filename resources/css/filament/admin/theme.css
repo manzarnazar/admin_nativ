@@ -1,0 +1,3390 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+@import 'flatpickr/dist/flatpickr.css';
+
+/*
+ * BRAND COLORS are now injected dynamically from the database.
+ * See: AdminPanelProvider.php -> HEAD_END render hook
+ *
+ * The following CSS variables are set per-request from System Settings -> Appearance:
+ *   --brand-primary       sidebar active: icon, text, left bar, sub-item dot
+ *   --brand-primary-light sidebar active: item background tint
+ *   --brand-btn           button background color
+ *   --brand-btn-hover     button background on hover (auto-computed: 85% primary + black)
+ *
+ * Default fallback (if DB has no value): #1A73E8
+ */
+
+
+
+/* Button color — bypasses Filament's palette system, uses --brand-btn directly */
+.fi-color-primary.fi-btn:not(.fi-outlined) {
+    background-color: var(--brand-btn) !important;
+    color: #ffffff !important;
+}
+
+.fi-color-primary.fi-btn:not(.fi-outlined):hover {
+    background-color: var(--brand-btn-hover) !important;
+    color: #ffffff !important;
+}
+
+.fi-color-primary.fi-btn:not(.fi-outlined)>.fi-icon {
+    color: #ffffff !important;
+}
+
+.fi-color-success.fi-btn:not(.fi-outlined) {
+    background-color: #20B364 !important;
+    color: #ffffff !important;
+}
+
+.fi-color-success.fi-btn:not(.fi-outlined):hover {
+    background-color: #059669 !important;
+    color: #ffffff !important;
+}
+
+.fi-color-success.fi-btn:not(.fi-outlined)>.fi-icon {
+    color: #ffffff !important;
+}
+
+/* Outlined primary button style override to use dynamic brand colors */
+.fi-color-primary.fi-btn.fi-outlined {
+    color: var(--brand-primary) !important;
+    box-shadow: inset 0 0 0 1px var(--brand-primary) !important;
+}
+
+.fi-color-primary.fi-btn.fi-outlined:hover {
+    background-color: var(--brand-primary-light) !important;
+}
+
+.fi-color-primary.fi-btn.fi-outlined>.fi-icon {
+    color: var(--brand-primary) !important;
+}
+
+/* Table actions/links — override primary link colors to use dynamic brand primary */
+.fi-link.fi-color-primary {
+    color: var(--brand-primary) !important;
+}
+
+.fi-link.fi-color-primary:hover {
+    color: var(--brand-btn-hover) !important;
+}
+
+.fi-link.fi-color-primary>.fi-icon {
+    color: var(--brand-primary) !important;
+}
+
+.fi-link.fi-color-primary:hover>.fi-icon {
+    color: var(--brand-btn-hover) !important;
+}
+
+/* Pill-style tabs (non-contained): active tab gets brand-primary fill */
+.fi-tabs:not(.fi-contained) .fi-tabs-item.fi-active {
+    background-color: var(--brand-primary) !important;
+}
+
+.fi-tabs:not(.fi-contained) .fi-tabs-item.fi-active .fi-tabs-item-label,
+.fi-tabs:not(.fi-contained) .fi-tabs-item.fi-active>.fi-icon {
+    color: #ffffff !important;
+}
+
+.fi-tabs:not(.fi-contained) .fi-tabs-item:not(.fi-active):hover {
+    background-color: color-mix(in srgb, var(--brand-primary) 10%, transparent) !important;
+}
+
+/* Contained tabs (underline style): active tab gets brand-primary text + bottom border */
+.fi-tabs.fi-contained .fi-tabs-item.fi-active .fi-tabs-item-label,
+.fi-tabs.fi-contained .fi-tabs-item.fi-active>.fi-icon {
+    color: var(--brand-primary) !important;
+}
+
+.fi-tabs.fi-contained .fi-tabs-item.fi-active {
+    border-bottom: 2px solid var(--brand-primary) !important;
+}
+
+/* Table TextColumn ->color('primary') — Filament uses primary-600 shade which is darker than
+   the base brand color. Override to use --brand-primary exactly. */
+.fi-ta-text-item.fi-color-primary,
+a.fi-ta-text-item.fi-color-primary {
+    color: var(--brand-primary) !important;
+}
+
+/* Toggle: override active toggles (except danger ones like maintenance mode) to use brand primary. */
+.fi-toggle.fi-toggle-on:not(.fi-color-danger) {
+    background-color: var(--brand-primary) !important;
+}
+
+/* Suppress blank Filament toast notifications (no title AND no body).
+   These appear as an empty white box with only an × button, caused by
+   concurrent/rapid Livewire requests in SPA mode replaying stale session data. */
+.fi-no-notification:not(:has(.fi-no-notification-title)):not(:has(.fi-no-notification-body)) {
+    display: none !important;
+}
+
+/* Topbar dropdowns — active/selected item (property, language, country) */
+.topbar-dd-active {
+    background-color: var(--brand-primary-light) !important;
+    color: var(--brand-primary) !important;
+}
+
+/* Topbar dropdowns — checkmark icon on active item */
+.topbar-dd-check {
+    color: var(--brand-primary) !important;
+}
+
+/* Notification bell — items should be white by default */
+.topbar-notif-item {
+    background-color: #ffffff !important;
+}
+
+.dark .topbar-notif-item {
+    background-color: rgb(31 41 55) !important;
+}
+
+/* Hover state: show primary light background */
+.topbar-notif-item:hover {
+    background-color: var(--brand-primary-light) !important;
+}
+
+.topbar-notif-unread {
+    /* No default background tint */
+}
+
+/* Notification bell animation when unread notifications exist */
+@keyframes bell-ring {
+
+    0%,
+    30%,
+    100% {
+        transform: rotate(0deg);
+    }
+
+    5% {
+        transform: rotate(14deg);
+    }
+
+    10% {
+        transform: rotate(-12deg);
+    }
+
+    15% {
+        transform: rotate(10deg);
+    }
+
+    20% {
+        transform: rotate(-8deg);
+    }
+
+    25% {
+        transform: rotate(4deg);
+    }
+}
+
+@keyframes badge-bounce {
+
+    0%,
+    30%,
+    100% {
+        transform: scale(1);
+    }
+
+    10% {
+        transform: scale(1.18);
+    }
+
+    20% {
+        transform: scale(0.95);
+    }
+
+    25% {
+        transform: scale(1.05);
+    }
+}
+
+.topbar-bell-ringing {
+    transform-origin: top center;
+    animation: bell-ring 4s ease-in-out infinite;
+}
+
+.topbar-notif-badge {
+    animation: badge-bounce 4s ease-in-out infinite;
+}
+
+@plugin '@tailwindcss/typography';
+
+
+@source '../../../../app/Filament/**/*';
+@source '../../../../app/Livewire/**/*';
+@source '../../../../resources/views/filament/**/*';
+@source '../../../../resources/views/livewire/**/*';
+
+/*
+ * White background for main content area (default)
+ */
+.fi-layout {
+    background-color: rgb(255 255 255) !important;
+}
+
+.dark .fi-layout {
+    background-color: rgb(17 24 39) !important;
+}
+
+/* Remove grey background from body, except on simple layouts */
+.fi-body:not(:has(.fi-simple-layout)) {
+    background-color: white !important;
+}
+
+/*
+ * Reusable gray section background — apply directly to any div that needs a gray background.
+ * Does NOT cascade to parent layout elements.
+ */
+.section-bg-gray {
+    background-color: #FFFFFF;
+}
+
+:is(.dark .section-bg-gray) {
+    background-color: rgb(31 41 55);
+}
+
+/* Dotted background for simple layouts (e.g., login page) */
+.fi-body:has(.fi-simple-layout) {
+    background-color: #fcfcfc !important;
+    /* Extremely light grey to match dots */
+    background-image: radial-gradient(circle, #d1d5db 1.5px, transparent 1.5px) !important;
+    background-size: 24px 24px !important;
+    background-position: center center !important;
+}
+
+/* Hide icons in global search modal for consistent appearance */
+.cp-item .cp-item-icon,
+.cp-item .cp-item-icon-empty {
+    display: none !important;
+}
+
+/* Items indented slightly relative to their group label (label is 10px, items 20px) */
+.cp-item {
+    padding-left: 20px !important;
+}
+
+/* Topbar: match Figma design with reduced height */
+.fi-topbar {
+    height: 64px !important;
+    padding: 16px 24px !important;
+    border-bottom: 2px solid #e7e7e7 !important;
+    box-shadow: none !important;
+    --tw-shadow: none !important;
+    --tw-ring-shadow: none !important;
+}
+
+/* Sidebar header: match topbar dimensions */
+.fi-sidebar-header {
+    height: 64px !important;
+    padding: 16px 24px !important;
+    border-bottom: 2px solid #e7e7e7 !important;
+}
+
+/* Hide the full logo when sidebar is collapsed — Filament forces display:flex !important on this
+   element in collapsed mode, which overrides Alpine's x-show display:none. We use body. prefix
+   to gain one extra specificity level and beat Filament's rule. */
+@media (min-width: 1024px) {
+    body.fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-header-logo-ctn {
+        display: none !important;
+    }
+}
+
+/* Override media query for sidebar header */
+@media (min-width: 1024px) {
+    .fi-body-has-topbar .fi-sidebar-header {
+        height: 64px !important;
+        padding: 16px 24px !important;
+        box-shadow: none !important;
+        --tw-ring-shadow: none !important;
+        background: transparent !important;
+    }
+}
+
+/* Topbar internal components: remove margins since container handles spacing */
+.fi-topbar>div {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    max-height: none !important;
+}
+
+/* Topbar font styles based on Figma design */
+.fi-topbar {
+    font-size: 14px !important;
+}
+
+/* Reduce padding on topbar components */
+.fi-topbar button,
+.fi-topbar .fi-dropdown-trigger {
+    padding-block: calc(var(--spacing) * 1.5) !important;
+    padding-inline: calc(var(--spacing) * 2) !important;
+}
+
+.fi-topbar .fi-dropdown-trigger {
+    color: #555 !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    font-family: 'Inter', sans-serif !important;
+    line-height: 20px !important;
+}
+
+.fi-topbar .fi-badge {
+    color: white !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    font-family: 'Manrope', sans-serif !important;
+    line-height: 16px !important;
+}
+
+.fi-topbar .fi-user-menu-name {
+    color: black !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    font-family: 'Inter', sans-serif !important;
+    line-height: 20px !important;
+}
+
+.fi-topbar .fi-user-menu-description {
+    color: #555 !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    font-family: 'Inter', sans-serif !important;
+    line-height: 16px !important;
+}
+
+/*
+ * Sidebar Search Bar — Figma Design Match
+ * Injected via renderHook SIDEBAR_NAV_START
+ */
+/* Pull the nav top padding in so search sits flush under the header */
+.fi-sidebar .fi-sidebar-nav {
+    padding-top: 0 !important;
+}
+
+/* Reduce vertical gap between navigation groups */
+.fi-sidebar-nav-groups {
+    row-gap: calc(var(--spacing) * 3) !important;
+}
+
+.sidebar-search-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 20 !important;
+    background-color: #ffffff !important;
+    margin-left: -1.5rem !important;
+    margin-right: -1.5rem !important;
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.5rem !important;
+    width: auto !important;
+}
+
+:is(.dark .sidebar-search-wrap) {
+    background-color: rgb(17 24 39) !important;
+}
+
+.sidebar-search-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    background-color: #f7f7f7;
+    border: none;
+    outline: 1px solid #ededed;
+    outline-offset: -1px;
+    border-radius: 8px;
+    padding: 12px 16px;
+    cursor: pointer;
+    text-align: left;
+    transition: outline-color 0.15s ease, background-color 0.15s ease;
+}
+
+.sidebar-search-btn:hover {
+    outline-color: #d1d5db;
+    background-color: #f0f0f0;
+}
+
+.sidebar-search-btn svg {
+    width: 22px;
+    height: 22px;
+    color: #555555;
+    flex-shrink: 0;
+}
+
+.sidebar-search-placeholder {
+    flex: 1 1 0;
+    font-size: 16px;
+    line-height: 24px;
+    color: #555555;
+    font-weight: 400;
+    word-wrap: break-word;
+}
+
+.sidebar-search-kbd-wrap {
+    position: absolute;
+    right: 12px;
+    top: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.sidebar-search-kbd-wrap kbd {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    border: none;
+    outline: 1px solid #ededed;
+    outline-offset: -1px;
+    border-radius: 4px;
+    padding: 4px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #555555;
+    font-family: inherit;
+    line-height: 24px;
+    overflow: hidden;
+}
+
+.sidebar-search-kbd-wrap kbd:last-child {
+    width: 32px;
+}
+
+/* Collapsed sidebar: hide search text and kbd, center the icon, adjust padding/margins */
+.fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .sidebar-search-wrap {
+    margin-left: -0.75rem !important;
+    margin-right: -0.75rem !important;
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.5rem !important;
+    width: auto !important;
+}
+
+.fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .sidebar-search-btn {
+    justify-content: center;
+    padding: 0.625rem 1rem;
+    gap: 0;
+}
+
+.fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .sidebar-search-placeholder,
+.fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .sidebar-search-kbd-wrap {
+    display: none;
+}
+
+/* Dark mode */
+:is(.dark .sidebar-search-btn) {
+    background-color: rgb(31 41 55);
+    border-color: rgb(55 65 81);
+}
+
+:is(.dark .sidebar-search-btn:hover) {
+    background-color: rgb(17 24 39);
+    border-color: rgb(75 85 99);
+}
+
+:is(.dark .sidebar-search-placeholder) {
+    color: rgb(107 114 128);
+}
+
+:is(.dark .sidebar-search-kbd-wrap kbd) {
+    background-color: rgb(31 41 55);
+    border-color: rgb(55 65 81);
+    color: rgb(156 163 175);
+}
+
+
+
+
+/*
+ * Layout restructure: Sidebar full-height, topbar only above content.
+ *
+ * Approach: Fix the sidebar in place, then push the topbar
+ * to the right so it doesn't overlap the sidebar.
+ */
+@media (min-width: 1024px) {
+
+    /* Sidebar: fixed, full viewport height, with border + smooth transition */
+    .fi-sidebar.fi-main-sidebar {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        inset-inline-start: 0;
+        z-index: 40;
+        overflow-y: hidden;
+        display: flex;
+        flex-direction: column;
+        border-inline-end: none;
+        transition: width 200ms ease !important;
+    }
+
+    /* Fixed vertical divider line that spans the full viewport height — never has a gap */
+    body:has(.fi-main-sidebar)::after {
+        content: '';
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        inset-inline-start: var(--sidebar-width);
+        width: 2px;
+        background-color: #E7E7E7;
+        z-index: 39;
+        pointer-events: none;
+    }
+
+    /* Only animate the divider after Alpine has initialized (not on page load) */
+    body.sidebar-ready:has(.fi-main-sidebar)::after {
+        transition: inset-inline-start 200ms ease;
+    }
+
+    body.fi-body-has-sidebar-collapsible-on-desktop:has(.fi-sidebar:not(.fi-sidebar-open))::after {
+        inset-inline-start: var(--collapsed-sidebar-width);
+    }
+
+    /* Header: fixed at top, never scrolls */
+    .fi-sidebar.fi-main-sidebar .fi-sidebar-header {
+        flex-shrink: 0;
+    }
+
+    /* Nav: takes remaining height, scrolls independently */
+    .fi-sidebar.fi-main-sidebar .fi-sidebar-nav {
+        flex: 1;
+        overflow-y: auto;
+        min-height: 0;
+        scrollbar-width: thin;
+        scrollbar-color: rgb(229 231 235) transparent;
+    }
+
+    .fi-sidebar.fi-main-sidebar .fi-sidebar-nav::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .fi-sidebar.fi-main-sidebar .fi-sidebar-nav::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .fi-sidebar.fi-main-sidebar .fi-sidebar-nav::-webkit-scrollbar-thumb {
+        background-color: rgb(229 231 235);
+        border-radius: 2px;
+    }
+
+    :is(.dark .fi-sidebar.fi-main-sidebar) {
+        border-inline-end-color: rgb(55 65 81);
+    }
+
+    /* Topbar & content: push right by sidebar width, collapse-aware */
+    .fi-topbar-ctn {
+        margin-inline-start: var(--sidebar-width);
+        /* z-40: above sticky table columns (z-30) so topbar dropdowns render on top */
+        z-index: 40 !important;
+        /* Filament sets overflow-x:clip which forces overflow-y:clip too, clipping dropdowns.
+           Override to visible so dropdowns can extend below the topbar bar. */
+        overflow: visible !important;
+    }
+
+    .fi-layout {
+        padding-inline-start: var(--sidebar-width);
+    }
+
+    /* Only animate topbar/content shift after Alpine has initialized (not on page load) */
+    body.sidebar-ready .fi-topbar-ctn {
+        transition: margin-inline-start 200ms ease;
+    }
+
+    body.sidebar-ready .fi-layout {
+        transition: padding-inline-start 200ms ease;
+    }
+
+    /* When sidebar is collapsed, use collapsed width */
+    .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar.fi-main-sidebar:not(.fi-sidebar-open) {
+        width: var(--collapsed-sidebar-width);
+    }
+
+    .fi-body-has-sidebar-collapsible-on-desktop:has(.fi-sidebar:not(.fi-sidebar-open)) .fi-topbar-ctn {
+        margin-inline-start: var(--collapsed-sidebar-width);
+    }
+
+    .fi-body-has-sidebar-collapsible-on-desktop:has(.fi-sidebar:not(.fi-sidebar-open)) .fi-layout {
+        padding-inline-start: var(--collapsed-sidebar-width);
+    }
+
+    /* Collapsed sidebar: reduce nav padding so icons aren't squeezed */
+    .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-nav {
+        padding-inline: 0.75rem;
+    }
+
+    /* Collapsed sidebar: stretch standalone nav item to match group trigger width */
+    .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item-btn {
+        width: 100%;
+    }
+
+    /* Show brand/logo in sidebar on desktop (Filament hides it when topbar exists) */
+    .fi-body-has-topbar .fi-sidebar-header {
+        display: flex;
+        background: transparent;
+        box-shadow: none;
+        --tw-ring-shadow: 0 0 #0000;
+        padding-inline: 1.5rem;
+    }
+
+    /* Collapsed sidebar: keep logo visible but compact */
+    .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-header-logo-ctn {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-header {
+        padding-inline: 0.5rem;
+        justify-content: center;
+    }
+
+    /* Text logo when collapsed: show as a clean initial badge */
+    .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-logo {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 2.25rem !important;
+        height: 2.25rem !important;
+        min-width: 2.25rem !important;
+        border-radius: 8px !important;
+        background-color: var(--brand-primary) !important;
+        color: #ffffff !important;
+        font-size: 0.875rem !important;
+        font-weight: 700 !important;
+        overflow: hidden !important;
+        white-space: nowrap !important;
+        text-overflow: clip !important;
+        margin: 0 auto !important;
+        letter-spacing: -0.5px !important;
+    }
+
+    /* Image logo when collapsed: scale to fit badge size */
+    .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-logo img {
+        width: 2.25rem !important;
+        height: 2.25rem !important;
+        object-fit: contain !important;
+        border-radius: 6px !important;
+    }
+}
+
+/*
+ * Command Palette — Tailwind-style search modal
+ */
+.cp-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.cp-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 201;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 15vh;
+    padding-inline: 1rem;
+}
+
+.cp-box {
+    width: 100%;
+    max-width: 600px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.cp-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.cp-search-icon {
+    width: 20px;
+    height: 20px;
+    color: #9ca3af;
+    flex-shrink: 0;
+}
+
+.cp-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    color: #111827;
+    line-height: 24px;
+}
+
+.cp-input::placeholder {
+    color: #9ca3af;
+}
+
+.cp-esc {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    border-radius: 5px;
+    padding: 2px 8px;
+    font-size: 12px;
+    color: #6b7280;
+    cursor: pointer;
+    font-family: inherit;
+    line-height: 20px;
+    flex-shrink: 0;
+}
+
+.cp-results {
+    max-height: 420px;
+    overflow-y: auto;
+    padding: 6px 0 10px;
+    scrollbar-width: thin;
+    scrollbar-color: #e5e7eb transparent;
+}
+
+.cp-results::-webkit-scrollbar {
+    width: 6px;
+}
+
+.cp-results::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.cp-results::-webkit-scrollbar-thumb {
+    background: #e5e7eb;
+    border-radius: 3px;
+}
+
+.cp-group {
+    padding: 4px 8px;
+}
+
+.cp-group+.cp-group {
+    margin-top: 4px;
+}
+
+.cp-group-label {
+    padding: 6px 10px 4px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #9ca3af;
+}
+
+.cp-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 10px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #374151;
+    font-size: 14px;
+    transition: background-color 0.1s ease;
+    cursor: pointer;
+}
+
+.cp-item:hover,
+.cp-item-active {
+    background-color: var(--brand-primary-light) !important;
+    color: var(--brand-primary) !important;
+}
+
+.cp-item-icon {
+    width: 18px;
+    height: 18px;
+    color: #9ca3af;
+    flex-shrink: 0;
+}
+
+.cp-item:hover .cp-item-icon,
+.cp-item-active .cp-item-icon {
+    color: var(--brand-primary);
+}
+
+.cp-item-icon-empty {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.cp-item-label {
+    flex: 1;
+}
+
+.cp-item-arrow {
+    width: 13px;
+    height: 13px;
+    color: #d1d5db;
+    flex-shrink: 0;
+}
+
+.cp-item:hover .cp-item-arrow,
+.cp-item-active .cp-item-arrow {
+    color: var(--brand-primary);
+}
+
+.cp-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 48px 24px;
+    font-size: 14px;
+    color: #9ca3af;
+    text-align: center;
+}
+
+.cp-empty svg {
+    width: 28px;
+    height: 28px;
+    color: #d1d5db;
+}
+
+.cp-hint-bar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 8px 16px;
+    border-top: 1px solid #f3f4f6;
+    background: #fafafa;
+}
+
+.cp-hint-bar span {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    color: #9ca3af;
+}
+
+.cp-hint-bar kbd {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 3px;
+    padding: 1px 5px;
+    font-size: 11px;
+    color: #6b7280;
+    font-family: inherit;
+    line-height: 16px;
+    box-shadow: 0 1px 0 #e5e7eb;
+}
+
+/* Dashboard: strip Filament widget chrome */
+.dashboard-chart-embed .fi-wi-chart {
+    padding: 0 !important;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    --tw-ring-shadow: 0 0 #0000 !important;
+    --tw-ring-offset-shadow: 0 0 #0000 !important;
+}
+
+.dashboard-chart-embed .fi-section {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    --tw-ring-shadow: 0 0 #0000 !important;
+    --tw-ring-offset-shadow: 0 0 #0000 !important;
+    gap: 0 !important;
+}
+
+.dashboard-chart-embed .fi-section>header {
+    display: none !important;
+}
+
+/* Collapse Filament section height to fit chart canvas */
+.dashboard-chart-embed .fi-wi-chart-canvas-ctn-no-aspect-ratio {
+    display: block !important;
+    width: 100% !important;
+}
+
+.dashboard-chart-embed .fi-section-content,
+.dashboard-chart-embed .fi-section-content>div {
+    display: block !important;
+    width: 100% !important;
+}
+
+.dashboard-chart-embed .fi-wi-chart-canvas-ctn canvas {
+    width: 100% !important;
+}
+
+
+.dashboard-chart-embed .fi-section-content-ctn {
+    padding: 0 !important;
+}
+
+.dashboard-chart-embed .fi-section-content {
+    padding: 0 !important;
+}
+
+
+
+/*
+ * Sidebar: remove connecting lines from sub-items, keep only the dot
+ */
+.fi-sidebar-item-grouped-border-part-not-first,
+.fi-sidebar-item-grouped-border-part-not-last {
+    display: none !important;
+}
+
+/*
+ * Figma Sidebar Styling
+ */
+/* Sidebar header: height 96px, border bottom #E7E7E7 (2px), transparent background */
+.fi-sidebar-header {
+    height: 96px !important;
+    border-bottom: 2px solid #E7E7E7 !important;
+    background-color: transparent !important;
+}
+
+/* Sidebar border right is now handled by body::after fixed pseudo-element */
+.fi-sidebar.fi-main-sidebar {
+    border-right: none !important;
+    border-inline-end: none !important;
+}
+
+/* Navigation group button: gap-2, padding p-3, text-base (16px), text-black */
+.fi-sidebar-group-btn {
+    gap: 8px !important;
+    padding: 12px !important;
+    font-size: 16px !important;
+    color: black !important;
+}
+
+.fi-sidebar-group-btn .fi-sidebar-group-label {
+    color: black !important;
+}
+
+/* Navigation item: gap-2, padding p-3, text-base (16px), text-black */
+.fi-sidebar-item-btn {
+    gap: 8px !important;
+    padding: 12px !important;
+    font-size: 16px !important;
+    color: black !important;
+}
+
+.fi-sidebar-item-btn .fi-sidebar-item-label {
+    color: black !important;
+}
+
+.fi-sidebar-item-icon {
+    color: black !important;
+}
+
+.fi-sidebar-group-icon {
+    color: black !important;
+}
+
+.fi-sidebar-group-btn .fi-icon {
+    color: black !important;
+}
+
+/* Submenu items: px-3 py-2 */
+.fi-sidebar-item:has(.fi-sidebar-item-grouped-border) .fi-sidebar-item-btn {
+    padding: 8px 12px !important;
+}
+
+/* Submenu dot indicator: 4px rounded-full, #555555 */
+.fi-sidebar-item-grouped-border-part-first,
+.fi-sidebar-item-grouped-border-part {
+    width: 4px !important;
+    height: 4px !important;
+    background-color: #555555 !important;
+    border-radius: 9999px !important;
+}
+
+/* ============================================================
+   ACTIVE STATES
+   Placed here to win cascade over the black override rules above
+   ============================================================ */
+
+/* Sidebar: Active GROUP HEADER — rounded card with left indicator */
+.fi-sidebar-group.fi-active>.fi-sidebar-group-btn {
+    background-color: var(--brand-primary-light) !important;
+    border-radius: 8px !important;
+    position: relative;
+}
+
+.fi-sidebar-group.fi-active>.fi-sidebar-group-btn::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 24px;
+    width: 4px;
+    background-color: var(--brand-primary);
+    border-radius: 0 9999px 9999px 0;
+}
+
+.fi-sidebar-group.fi-active>.fi-sidebar-group-btn,
+.fi-sidebar-group.fi-active>.fi-sidebar-group-btn .fi-sidebar-group-label,
+.fi-sidebar-group.fi-active>.fi-sidebar-group-btn .fi-icon,
+.fi-sidebar-group.fi-active>.fi-sidebar-group-btn .fi-sidebar-group-icon,
+.fi-sidebar-group.fi-active>.fi-sidebar-group-btn svg {
+    color: var(--brand-primary) !important;
+}
+
+.fi-sidebar-group.fi-active>.fi-sidebar-group-btn svg [fill="black"] {
+    fill: currentColor !important;
+}
+
+/* Sidebar: Active TOP-LEVEL item — rounded card with left indicator */
+.fi-sidebar-item.fi-active:not(:has(.fi-sidebar-item-grouped-border))>a {
+    background-color: var(--brand-primary-light) !important;
+    border-radius: 8px !important;
+    position: relative;
+}
+
+.fi-sidebar-item.fi-active:not(:has(.fi-sidebar-item-grouped-border))>a::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 24px;
+    width: 4px;
+    background-color: var(--brand-primary);
+    border-radius: 0 9999px 9999px 0;
+}
+
+.fi-sidebar-item.fi-active:not(:has(.fi-sidebar-item-grouped-border))>a,
+.fi-sidebar-item.fi-active:not(:has(.fi-sidebar-item-grouped-border))>a .fi-sidebar-item-label,
+.fi-sidebar-item.fi-active:not(:has(.fi-sidebar-item-grouped-border))>a .fi-sidebar-item-icon,
+.fi-sidebar-item.fi-active:not(:has(.fi-sidebar-item-grouped-border))>a svg {
+    color: var(--brand-primary) !important;
+}
+
+.fi-sidebar-item.fi-active:not(:has(.fi-sidebar-item-grouped-border))>a svg [fill="black"] {
+    fill: currentColor !important;
+}
+
+/* Sidebar: Active SUB-ITEM — blue dot, transparent background, text remains black */
+.fi-sidebar-item.fi-active:has(.fi-sidebar-item-grouped-border)>a {
+    background-color: transparent !important;
+    border-radius: 0 !important;
+}
+
+.fi-sidebar-item.fi-active:has(.fi-sidebar-item-grouped-border)>a::before {
+    display: none !important;
+}
+
+/* Sub-item text turns blue */
+.fi-sidebar-item.fi-active:has(.fi-sidebar-item-grouped-border)>a,
+.fi-sidebar-item.fi-active:has(.fi-sidebar-item-grouped-border)>a .fi-sidebar-item-label {
+    color: var(--brand-primary) !important;
+}
+
+/* Turn the dot brand color */
+.fi-sidebar-item.fi-active:has(.fi-sidebar-item-grouped-border) .fi-sidebar-item-grouped-border-part-first,
+.fi-sidebar-item.fi-active:has(.fi-sidebar-item-grouped-border) .fi-sidebar-item-grouped-border-part {
+    background-color: var(--brand-primary) !important;
+}
+
+/* Dark mode active overrides */
+.dark .fi-sidebar-group.fi-active>.fi-sidebar-group-btn {
+    background-color: color-mix(in srgb, var(--brand-primary) 30%, transparent) !important;
+}
+
+.dark .fi-sidebar-group.fi-active>.fi-sidebar-group-btn::before {
+    background-color: var(--brand-primary);
+}
+
+.dark .fi-sidebar-group.fi-active>.fi-sidebar-group-btn,
+.dark .fi-sidebar-group.fi-active>.fi-sidebar-group-btn .fi-sidebar-group-label,
+.dark .fi-sidebar-group.fi-active>.fi-sidebar-group-btn .fi-icon {
+    color: var(--brand-primary) !important;
+}
+
+.dark .fi-sidebar-item.fi-active:not(:has(.fi-sidebar-item-grouped-border))>a {
+    background-color: color-mix(in srgb, var(--brand-primary) 30%, transparent) !important;
+}
+
+.dark .fi-sidebar-item.fi-active:not(:has(.fi-sidebar-item-grouped-border))>a::before {
+    background-color: var(--brand-primary);
+}
+
+.dark .fi-sidebar-item.fi-active:not(:has(.fi-sidebar-item-grouped-border))>a,
+.dark .fi-sidebar-item.fi-active:not(:has(.fi-sidebar-item-grouped-border))>a .fi-sidebar-item-label,
+.dark .fi-sidebar-item.fi-active:not(:has(.fi-sidebar-item-grouped-border))>a .fi-sidebar-item-icon {
+    color: var(--brand-primary) !important;
+}
+
+.dark .fi-sidebar-item.fi-active:has(.fi-sidebar-item-grouped-border)>a,
+.dark .fi-sidebar-item.fi-active:has(.fi-sidebar-item-grouped-border)>a .fi-sidebar-item-label {
+    color: white !important;
+}
+
+.dark .fi-sidebar-item.fi-active:has(.fi-sidebar-item-grouped-border) .fi-sidebar-item-grouped-border-part-first,
+.dark .fi-sidebar-item.fi-active:has(.fi-sidebar-item-grouped-border) .fi-sidebar-item-grouped-border-part {
+    background-color: var(--brand-primary) !important;
+}
+
+/*
+ * Global form input border: 1px solid #555555 per design spec.
+ * Only override non-focused/non-invalid state so blue focus ring is preserved.
+ */
+.fi-input-wrp {
+    border-radius: 8px !important;
+}
+
+.fi-input-wrp:not(:focus-within):not(.fi-invalid) {
+    --tw-ring-color: #555555 !important;
+}
+
+:is(.dark .fi-input-wrp:not(:focus-within):not(.fi-invalid)) {
+    --tw-ring-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+/*
+ * Marketing notifications: Type selector card grid
+ * Matches design: 3 equal bordered cards with icon + label, no radio circle visible
+ */
+.type-cards.fi-fo-radio {
+    gap: 12px !important;
+    margin-top: 8px !important;
+}
+
+.type-cards.fi-fo-radio>.fi-fo-radio-label {
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0 !important;
+    padding: 12px 16px !important;
+    border: 1px solid #EDEDED !important;
+    border-radius: 12px !important;
+    cursor: pointer !important;
+    background-color: #F7F7F7 !important;
+    transition: border-color 0.15s ease, background-color 0.15s ease !important;
+    self-start: unset !important;
+    align-self: stretch !important;
+}
+
+:is(.dark .type-cards.fi-fo-radio > .fi-fo-radio-label) {
+    background-color: rgb(31 41 55) !important;
+    border-color: rgb(55 65 81) !important;
+}
+
+.type-cards.fi-fo-radio>.fi-fo-radio-label:hover {
+    border-color: var(--brand-primary) !important;
+    background-color: var(--brand-primary-light) !important;
+}
+
+:is(.dark .type-cards.fi-fo-radio > .fi-fo-radio-label:hover) {
+    border-color: var(--brand-primary) !important;
+    background-color: color-mix(in srgb, var(--brand-primary) 15%, transparent) !important;
+}
+
+.type-cards.fi-fo-radio>.fi-fo-radio-label:has(.fi-radio-input:checked) {
+    border-color: var(--brand-primary) !important;
+    background-color: var(--brand-primary-light) !important;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-primary) 15%, transparent) !important;
+}
+
+:is(.dark .type-cards.fi-fo-radio > .fi-fo-radio-label:has(.fi-radio-input:checked)) {
+    border-color: var(--brand-primary) !important;
+    background-color: color-mix(in srgb, var(--brand-primary) 20%, transparent) !important;
+}
+
+/* Hide radio circle */
+.type-cards .fi-radio-input {
+    display: none !important;
+}
+
+/* Center the label text block */
+.type-cards .fi-fo-radio-label-text {
+    width: 100% !important;
+    text-align: center !important;
+}
+
+/* Audience card selector — same card treatment as .type-cards, but horizontal
+   (radio circle + label side by side) with the radio circle kept visible. */
+/* Force a real CSS grid instead of Filament's default multi-column masonry
+   flow (columns() + negative-margin/padding-top trick) — that technique
+   doesn't leave a reliable visual gap between rows once card padding is
+   overridden, so cards end up touching. */
+.audience-cards.fi-fo-radio {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+    margin-top: 8px !important;
+}
+
+.audience-cards.fi-fo-radio>.fi-fo-radio-label {
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding: 14px 16px !important;
+    margin: 0 !important;
+    border: 1px solid #EDEDED !important;
+    border-radius: 12px !important;
+    cursor: pointer !important;
+    background-color: #F7F7F7 !important;
+    transition: border-color 0.15s ease, background-color 0.15s ease !important;
+    align-self: stretch !important;
+}
+
+::is(.dark .audience-cards.fi-fo-radio > .fi-fo-radio-label) {
+    background-color: rgb(31 41 55) !important;
+    border-color: rgb(55 65 81) !important;
+}
+
+.audience-cards.fi-fo-radio>.fi-fo-radio-label:hover {
+    border-color: var(--brand-primary) !important;
+    background-color: var(--brand-primary-light) !important;
+}
+
+::is(.dark .audience-cards.fi-fo-radio > .fi-fo-radio-label:hover) {
+    border-color: var(--brand-primary) !important;
+    background-color: color-mix(in srgb, var(--brand-primary) 15%, transparent) !important;
+}
+
+.audience-cards.fi-fo-radio>.fi-fo-radio-label:has(.fi-radio-input:checked) {
+    border-color: var(--brand-primary) !important;
+    background-color: var(--brand-primary-light) !important;
+}
+
+::is(.dark .audience-cards.fi-fo-radio > .fi-fo-radio-label:has(.fi-radio-input:checked)) {
+    border-color: var(--brand-primary) !important;
+    background-color: color-mix(in srgb, var(--brand-primary) 20%, transparent) !important;
+}
+
+/* Icon box inside each card */
+.icon-box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    margin-bottom: 6px;
+    background-color: #FFFFFF;
+    border-radius: 8px;
+}
+
+.icon-box svg {
+    width: 18px;
+    height: 18px;
+    pointer-events: none;
+}
+
+.fi-ta-header-toolbar {
+    /* Vertical breathing room on the toolbar row (matches Figma p-6) */
+    padding-block: 1.5rem;
+
+    /* Export button: reorder to far right */
+    > :nth-child(1) {
+        order: 2;
+        margin-inline-start: 0;
+        flex-shrink: 0;
+    }
+
+    /* Search + filters + columns container: take full remaining width */
+    > :nth-child(2) {
+        order: 1;
+        flex-grow: 1;
+        margin-inline-start: 0;
+    }
+
+}
+
+/*
+ * Table search field: take the full available width in the toolbar
+ * so it stretches across the left side per design.
+ */
+.fi-ta-header-toolbar> :nth-child(2) {
+    display: flex !important;
+    align-items: center;
+    gap: 0.75rem;
+    /* All items align right by default; search (if present) pushes itself left. */
+    justify-content: flex-end;
+}
+
+.fi-ta-header-toolbar .fi-ta-search-field {
+    flex-grow: 1;
+    width: 100%;
+    max-width: 32rem;
+    /* Push search left so siblings (Filters/Columns) stay aligned to the right. */
+    margin-inline-end: auto !important;
+}
+
+.fi-ta-header-toolbar .fi-ta-search-field .fi-input-wrp {
+    width: 100%;
+    /* Subtle grey fill matching the table header row (gray-100) */
+    background-color: #F7F7F7 !important;
+}
+
+/* Lighter outline matching Figma N---200 (gray-200), overriding the global
+   .fi-input-wrp dark ring color for this specific input. */
+.fi-ta-header-toolbar .fi-ta-search-field .fi-input-wrp:not(:focus-within):not(.fi-invalid) {
+    --tw-ring-color: rgb(229 231 235) !important;
+}
+
+/* Placeholder + input text at 16px (Figma text-base) instead of Filament's 14px default. */
+.fi-ta-header-toolbar .fi-ta-search-field .fi-input-wrp input {
+    font-size: 1rem !important;
+    line-height: 1.5rem !important;
+    color: #555555 !important;
+}
+
+.fi-ta-header-toolbar .fi-ta-search-field .fi-input-wrp input::placeholder {
+    color: #555555 !important;
+    opacity: 1 !important;
+}
+
+/* Search icon also uses N-700 per Figma */
+.fi-ta-header-toolbar .fi-ta-search-field .fi-input-wrp svg {
+    color: #555555 !important;
+}
+
+:is(.dark .fi-ta-header-toolbar .fi-ta-search-field .fi-input-wrp) {
+    background-color: rgb(31 41 55) !important;
+}
+
+:is(.dark .fi-ta-header-toolbar .fi-ta-search-field .fi-input-wrp:not(:focus-within):not(.fi-invalid)) {
+    --tw-ring-color: rgb(55 65 81) !important;
+}
+
+
+.fi-color-dark.fi-btn {
+    --bg: oklch(0 0 0) !important;
+    --hover-bg: oklch(0.25 0 0) !important;
+    --text: oklch(1 0 0) !important;
+    --hover-text: oklch(1 0 0) !important;
+}
+
+:is(.dark .fi-color-dark.fi-btn) {
+    --dark-bg: oklch(1 0 0) !important;
+    --dark-hover-bg: oklch(0.9 0 0) !important;
+    --dark-text: oklch(0 0 0) !important;
+    --dark-hover-text: oklch(0 0 0) !important;
+}
+
+/*
+ * Pagination layout: "Showing Result [dropdown] of X" on LEFT,
+ * page numbers on RIGHT.
+ */
+.fi-pagination {
+    display: flex !important;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.fi-pagination-overview-combined {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.fi-pagination .fi-pagination-items {
+    margin-inline-start: auto;
+}
+
+.fi-pagination .fi-pagination-previous-btn {
+    margin-inline-start: auto;
+}
+
+.fi-pagination .fi-pagination-next-btn {
+    order: 4;
+}
+
+/*
+ * Record action icon buttons: rounded square with subtle background
+ */
+td .fi-ta-actions .fi-icon-btn {
+    background-color: #F7F7F7 !important;
+    border: 1px solid #ededed !important;
+    border-radius: 0.5rem !important;
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+    margin-right: 4px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+:is(.dark td .fi-ta-actions .fi-icon-btn) {
+    background-color: rgb(55 65 81) !important;
+    border-color: rgb(75 85 99) !important;
+}
+
+td .fi-ta-actions .fi-icon-btn .fi-icon {
+    width: 1.40rem !important;
+    height: 1.40rem !important;
+}
+
+:is(.dark td .fi-ta-actions .fi-icon-btn) {
+    background-color: rgb(55 65 81);
+}
+
+td .fi-ta-actions .fi-color-success.fi-icon-btn {
+    background-color: rgb(220 252 231) !important;
+}
+
+:is(.dark td .fi-ta-actions .fi-color-success.fi-icon-btn) {
+    background-color: rgb(20 83 45 / 0.4) !important;
+}
+
+td .fi-ta-actions .fi-color-danger.fi-icon-btn {
+    background-color: rgb(254 226 226) !important;
+}
+
+:is(.dark td .fi-ta-actions .fi-color-danger.fi-icon-btn) {
+    background-color: rgb(127 29 29 / 0.4) !important;
+}
+
+/*
+ * How It Works step cards: show edit/delete icons on hover
+ */
+.step-card .step-card-actions {
+    display: none;
+}
+
+.step-card:hover .step-card-actions {
+    display: flex;
+}
+
+/*
+ * Facility cards: show edit/delete icons on hover
+ */
+/*
+ * Facility category header: subtle background
+ */
+.facility-category-header {
+    background-color: rgb(249 250 251);
+}
+
+:is(.dark .facility-category-header) {
+    background-color: rgb(17 24 39);
+}
+
+/*
+ * Facility category header: bordered square icon buttons
+ */
+.facility-category-actions .fi-icon-btn {
+    background-color: rgb(255 255 255) !important;
+    border: 1px solid rgb(229 231 235) !important;
+    border-radius: 0.625rem !important;
+    width: 2.25rem !important;
+    height: 2.25rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin-left: 4px !important;
+}
+
+:is(.dark .facility-category-actions .fi-icon-btn) {
+    background-color: rgb(31 41 55) !important;
+    border-color: rgb(75 85 99) !important;
+}
+
+.facility-card .facility-card-actions {
+    display: none;
+}
+
+.facility-card:hover .facility-card-actions {
+    display: flex;
+}
+
+.facility-card-actions .fi-icon-btn {
+    background-color: rgb(255 255 255) !important;
+    border: 1px solid rgb(229 231 235) !important;
+    border-radius: 0.5rem !important;
+    width: 2rem !important;
+    height: 2rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin-left: 4px !important;
+}
+
+:is(.dark .facility-card-actions .fi-icon-btn) {
+    background-color: rgb(31 41 55) !important;
+    border-color: rgb(75 85 99) !important;
+}
+
+/*
+ * Property rule cards: show edit/delete icons on hover, blue title on hover
+ */
+.rule-card .rule-card-actions {
+    display: none;
+}
+
+.rule-card:hover .rule-card-actions {
+    display: flex;
+}
+
+.rule-card:hover .rule-card-title {
+    color: var(--brand-primary);
+}
+
+.rule-card-actions .fi-icon-btn {
+    background-color: rgb(255 255 255) !important;
+    border: 1px solid rgb(229 231 235) !important;
+    border-radius: 0.5rem !important;
+    width: 2rem !important;
+    height: 2rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin-left: 4px !important;
+}
+
+:is(.dark .rule-card-actions .fi-icon-btn) {
+    background-color: rgb(31 41 55) !important;
+    border-color: rgb(75 85 99) !important;
+}
+
+:is(.dark .rule-card:hover .rule-card-title) {
+    color: var(--brand-primary);
+}
+
+/*
+ * Modal: scrollbar only on the content area (between sticky header/footer),
+ * hidden on the outer window to preserve rounded corners.
+ */
+.fi-modal-window {
+    overflow: hidden !important;
+}
+
+/*
+ * Let a Select's dropdown panel float ABOVE the modal instead of forcing the
+ * modal to grow. The panel (.fi-dropdown-panel) is already a fully
+ * self-contained floating card — absolute position, its own shadow-lg,
+ * rounded-lg, z-20 — so it doesn't need extra room INSIDE the modal, it just
+ * needs the modal's overflow clipping (set above, to preserve rounded
+ * corners) out of its way while it's open. This also fixes floating-ui's
+ * flip decision at the root: overflow:hidden/auto ancestors count as
+ * "clipping ancestors" it measures available space against, so removing
+ * both here lets it fall through to the viewport as the real boundary
+ * instead of the modal's own (often too-short) box, and it stops flipping
+ * to open upward in a short wizard step like the "Add New Country" modal.
+ */
+.fi-modal-window:has(.fi-select-input-btn[aria-expanded="true"]) {
+    overflow: visible !important;
+}
+
+.fi-modal-window:has(.fi-select-input-btn[aria-expanded="true"]) .fi-modal-content {
+    overflow: visible !important;
+}
+
+/* Modal close (X) button: bordered rounded square per Figma design */
+.fi-modal-header .fi-icon-btn {
+    border: 1px solid rgb(229 231 235) !important;
+    border-radius: 0.5rem !important;
+}
+
+:is(.dark .fi-modal-header .fi-icon-btn) {
+    border-color: rgb(55 65 81) !important;
+}
+
+/* Booking detail sidebar — right-aligned floating card */
+.fi-modal-window-ctn:has(.booking-detail-sidebar) {
+    justify-items: end !important;
+    overflow: hidden !important;
+    grid-template-rows: 0 1fr 0 !important;
+}
+
+.booking-detail-sidebar {
+    border-radius: 1rem !important;
+    margin: 0 !important;
+    overflow-y: auto !important;
+}
+
+.fi-modal-window>.fi-modal-content {
+    overflow-y: auto !important;
+    scrollbar-width: thin;
+}
+
+.homepage-section-modal>.fi-modal-content {
+    background-color: #F7F7F7;
+}
+
+:is(.dark .homepage-section-modal>.fi-modal-content) {
+    background-color: rgb(31 41 55);
+}
+
+.fi-modal-window>.fi-modal-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.fi-modal-window>.fi-modal-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.fi-modal-window>.fi-modal-content::-webkit-scrollbar-thumb {
+    background-color: rgb(209 213 219);
+    border-radius: 3px;
+}
+
+:is(.dark .fi-modal-window > .fi-modal-content::-webkit-scrollbar-thumb) {
+    background-color: rgb(75 85 99);
+}
+
+/*
+ * Todays Check-ins edit modal: flex-column sticky layout.
+ * Header and footer are fixed-size flex items (top/bottom), content scrolls in between.
+ * Using flex-shrink-0 on footer instead of position:sticky avoids the "extra bottom space"
+ * that occurs when sticky:bottom-0 is used inside a non-scrolling overflow:hidden container.
+ */
+.todays-checkins-edit-modal {
+    display: flex !important;
+    flex-direction: column !important;
+    max-height: calc(100dvh - 2rem) !important;
+    overflow: hidden !important;
+}
+
+.todays-checkins-edit-modal>.fi-modal-content {
+    flex: 1 !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+}
+
+.todays-checkins-edit-modal>.fi-modal-footer {
+    position: static !important;
+    flex-shrink: 0 !important;
+}
+
+/* Marketing Notifications wizard: the Wizard's own footer (Cancel/Next,
+   Back/Send Notification) lives inside the scrollable schema content, not
+   in Filament's standard sticky .fi-modal-footer slot (suppressed by
+   isWizard()). Pin it to the bottom of the modal's own scroll area and match
+   Filament's own .fi-modal-has-sticky-footer look exactly (see
+   vendor/filament/support/resources/css/components/modal.css) so it reads
+   the same as every other modal's footer in the app. */
+.marketing-notification-modal .fi-sc-wizard-footer {
+    position: sticky !important;
+    /* .fi-modal-content has padding-block: 1.5rem (py-6) — without this
+       negative offset, "bottom: 0" sticks 1.5rem above the modal's true
+       visual bottom edge, inside that trailing padding. */
+    bottom: -1.5rem !important;
+    z-index: 10 !important;
+    margin: 1rem -1.5rem -1.5rem !important;
+    padding: 1.25rem 1.5rem !important;
+    border-top: 1px solid rgb(229 231 235) !important;
+    background-color: #ffffff !important;
+}
+
+:is(.dark .marketing-notification-modal .fi-sc-wizard-footer) {
+    border-top-color: rgb(255 255 255 / 0.1) !important;
+    background-color: rgb(17 24 39) !important;
+}
+
+/*
+ * FileUpload grid: fix image size so 4 fit per row (grid layout only)
+ */
+.filepond--root[data-style-panel-layout~="grid"] .filepond--item {
+    width: calc(25% - 0.75em) !important;
+}
+
+/*
+ * FileUpload single: preview fills full container width and height.
+ * Force the root container to be at least 200px tall so the image preview
+ * (which fills 100% of the container) has something to expand into.
+ * The grid layout (multi-image uploads) is excluded so it keeps its row sizing.
+ */
+.filepond--root:not([data-style-panel-layout~="grid"]) {
+    min-height: 200px !important;
+}
+
+/* Compact file upload (JSON/non-image): reduced drop zone height */
+.compact-file-upload .filepond--root:not([data-style-panel-layout~="grid"]) {
+    min-height: 80px !important;
+}
+
+.filepond--root:not([data-style-panel-layout~="grid"]) .filepond--list-scroller {
+    height: 100% !important;
+    transform: none !important;
+}
+
+.filepond--root:not([data-style-panel-layout~="grid"]) .filepond--list {
+    height: 100% !important;
+}
+
+.filepond--root:not([data-style-panel-layout~="grid"]) .filepond--item {
+    width: 100% !important;
+    height: 100% !important;
+    transform: none !important;
+}
+
+.filepond--root:not([data-style-panel-layout~="grid"]) .filepond--file-wrapper,
+.filepond--root:not([data-style-panel-layout~="grid"]) .filepond--file {
+    height: 100% !important;
+}
+
+.filepond--image-preview-wrapper {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.filepond--image-preview {
+    height: 100% !important;
+}
+
+.filepond--image-preview canvas {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+}
+
+/*
+ * Options repeater: move "+ Add" button above items, inline with label
+ */
+.options-repeater {
+    display: flex;
+    flex-direction: column;
+}
+
+.options-repeater .fi-fo-repeater-add {
+    order: -1;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -1.75rem;
+    margin-bottom: 0.5rem;
+}
+
+/*
+ * Payment toggle buttons: full-width, blog-tab style
+ */
+.payment-toggle.fi-fo-toggle-buttons.fi-btn-group {
+    width: 100% !important;
+    background-color: var(--brand-primary-light) !important;
+    border-radius: 0.75rem !important;
+    padding: 0.25rem !important;
+    border: none !important;
+    gap: 0.25rem !important;
+}
+
+.payment-toggle.fi-fo-toggle-buttons label.fi-btn {
+    flex: 1 !important;
+    justify-content: center !important;
+    border-radius: 0.5rem !important;
+    padding: 0.5rem 1rem !important;
+    font-weight: 500 !important;
+    font-size: 0.875rem !important;
+    border: none !important;
+    background-color: transparent !important;
+    color: #4b5563 !important;
+    box-shadow: none !important;
+}
+
+.payment-toggle.fi-fo-toggle-buttons input:checked+label.fi-btn {
+    background-color: var(--brand-primary) !important;
+    color: #fff !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+}
+
+/*
+ * Event Management: Hero Image "Remove on Hover" behavior
+ */
+.hero-image-upload .filepond--file-action-button {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.hero-image-upload:hover .filepond--file-action-button {
+    opacity: 1;
+}
+
+/*
+ * Event Management: Clean Repeater (Figma Alignment)
+ */
+.clean-repeater .fi-fo-repeater-item {
+    background-color: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    position: relative !important;
+    box-shadow: none !important;
+}
+
+.clean-repeater .fi-fo-repeater-item>header {
+    display: none !important;
+}
+
+.clean-repeater .fi-fo-repeater-item>.fi-fo-repeater-item-content {
+    padding: 0 !important;
+}
+
+/* Ensure the bullet is centered with the input */
+.clean-repeater .fi-fo-repeater-item .mt-4 {
+    margin-top: 1.15rem !important;
+}
+
+/* 
+ * Apply the background and border to the whole repeater container 
+ * matching Figma Image 8
+ */
+.clean-repeater {
+    background-color: rgb(249 250 251) !important;
+    border: 1px solid rgb(229 231 235) !important;
+    border-radius: 1.5rem !important;
+    padding: 1rem !important;
+}
+
+/* Remove item-level background since container now has it */
+.clean-repeater .fi-fo-repeater-item {
+    background-color: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin-bottom: 0.5rem !important;
+}
+
+/* Style the '+ Add another feature' as a blue link */
+.clean-repeater .fi-fo-repeater-add-action {
+    justify-content: flex-start !important;
+    padding-left: 1.5rem !important;
+    margin-top: 1rem !important;
+}
+
+.clean-repeater .fi-fo-repeater-add-action button {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    font-weight: 600 !important;
+}
+
+/* 
+ * Style the trash icon in the input field to be light gray 
+ * and turn red on hover (matching Figma Image 9)
+ */
+.clean-repeater button.fi-fo-text-input-action {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    color: rgb(209 213 219) !important;
+    /* light gray */
+}
+
+.clean-repeater button.fi-fo-text-input-action:hover {
+    color: rgb(220 38 38) !important;
+    /* red-600 */
+}
+
+/*
+ * Event Management: Feature bullets alignment
+ */
+.features-repeater-dot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 
+ * View Event Details Modal — Pixel-Perfect Figma Parity
+ */
+
+/* Heading: large bold just like Figma */
+.view-event-details-modal .fi-modal-heading {
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.01em !important;
+}
+
+/* Remove default inner padding from infolist section so image spans full width */
+.view-event-details-modal .fi-modal-content {
+    padding: 0 !important;
+}
+
+/*
+ * Room number in table description: color var(--brand-primary) (targeted to room-details-column only)
+ */
+.room-details-column .fi-ta-text-description {
+    color: var(--brand-primary) !important;
+}
+
+/* Restore padding for the infolist header/description area only */
+.view-event-details-modal .fi-modal-header {
+    padding: 1.5rem 1.5rem 0 1.5rem !important;
+}
+
+/* Full-width image wrapper — no longer needed (kept for reference) */
+
+
+/* Signature dashed blue separator + footer alignment */
+.view-event-details-modal .fi-modal-footer {
+    border-top: 1.5px dashed rgb(59 130 246) !important;
+    padding: 1.25rem 1.5rem !important;
+    display: flex !important;
+    justify-content: flex-end !important;
+    margin-top: 1rem !important;
+}
+
+/* Clean "Close" button styling */
+.view-event-details-modal .fi-modal-footer button {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: 1px solid rgb(229 231 235) !important;
+    color: rgb(55 65 81) !important;
+    border-radius: 0.5rem !important;
+    padding: 0.5rem 1.25rem !important;
+    font-weight: 500 !important;
+    font-size: 0.875rem !important;
+    cursor: pointer !important;
+}
+
+.view-event-details-modal .fi-modal-footer button:hover {
+    background: rgb(249 250 251) !important;
+}
+
+/* Add spacing between badge row and title */
+.view-event-details-modal .fi-in-text.fi-size-lg {
+    margin-top: 0.5rem !important;
+    font-size: 1.25rem !important;
+}
+
+/*
+ * Event Details Modal — Custom HTML infolist layout
+ */
+
+/* Outer wrapper: strip Filament Text component chrome */
+.view-event-details-modal .fi-sc-text {
+    display: block !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* The infolist container */
+.event-modal-infolist {
+    display: flex;
+    flex-direction: column;
+    padding-top: 1rem;
+}
+
+/* Badge row padding */
+.event-modal-infolist>div:first-child {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+/* h2 title padding */
+.event-modal-infolist h2 {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+}
+
+/* description padding */
+.event-modal-infolist p {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+}
+
+/* Hero image wrapper: bleed to edges of modal */
+.event-modal-img-wrap {
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 1.25rem;
+}
+
+.event-modal-img-wrap img {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 320px !important;
+    object-fit: cover !important;
+    display: block !important;
+    border-radius: 0 !important;
+}
+
+/* Status badge styles */
+.event-modal-status-badge {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.2rem 0.75rem;
+    line-height: 1.5;
+}
+
+.event-modal-status-badge.badge-active {
+    background-color: rgb(220 252 231);
+    color: rgb(21 128 61);
+}
+
+.event-modal-status-badge.badge-inactive {
+    background-color: rgb(254 226 226);
+    color: rgb(185 28 28);
+}
+
+/* Dark mode adjustments */
+:is(.dark .event-modal-status-badge.badge-active) {
+    background-color: rgb(20 83 45 / 0.4);
+    color: rgb(134 239 172);
+}
+
+:is(.dark .event-modal-status-badge.badge-inactive) {
+    background-color: rgb(127 29 29 / 0.4);
+    color: rgb(252 165 165);
+}
+
+:is(.dark .event-modal-infolist h2) {
+    color: rgb(255 255 255) !important;
+}
+
+:is(.dark .event-modal-infolist p) {
+    color: rgb(156 163 175) !important;
+}
+
+/* Currency add modal: allow Tom Select dropdown to overflow and open downward */
+.currency-add-modal {
+    overflow: visible !important;
+}
+
+.currency-add-modal .fi-modal-content,
+.currency-add-modal .fi-modal-content>div,
+.currency-add-modal form,
+.currency-add-modal .fi-fo-component-ctn {
+    overflow: visible !important;
+}
+
+.currency-add-modal .ts-dropdown {
+    z-index: 9999 !important;
+    top: 100% !important;
+    bottom: auto !important;
+    margin-top: 2px;
+}
+
+/* Delete confirmation modals: vertically center on all screen sizes.
+   Filament defaults to sm:grid-rows-[1fr_auto_3fr] which pushes the modal
+   ~25% from the top. Override to 1fr_auto_1fr for true vertical centering. */
+.fi-modal-window-ctn:has(> .fi-modal-window.fi-delete-modal-centered) {
+    grid-template-rows: 1fr auto 1fr;
+}
+
+/*
+ * Tables: uppercase column headers per Figma design.
+ * "BOOKING INFO   CUSTOMER INFO   ROOM DETAILS …"
+ */
+.fi-ta-header-cell {
+    text-transform: uppercase !important;
+    letter-spacing: 0.04em !important;
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+    color: rgb(107 114 128) !important;
+}
+
+:is(.dark .fi-ta-header-cell) {
+    color: rgb(156 163 175) !important;
+}
+
+/* Page subheading: widen the default max-w-2xl (42rem) to max-w-4xl (56rem)
+   so longer admin descriptions don't wrap prematurely on wide screens. */
+.fi-header-subheading {
+    max-width: 56rem;
+}
+
+/* Blog create/edit page: viewport-locked dashboard layout.
+   The page fills the viewport beneath the 64px topbar. Header (breadcrumbs +
+   title + action buttons) and the right-hand Live Preview stay fixed in
+   place. The middle scroll region (.fi-page-content) holds the Blog
+   Configuration + SEO Configuration sections — only these scroll.
+   Scoped via .fi-blog-form-page so it never leaks to other admin pages. */
+@media (min-width: 1024px) {
+
+    body:has(.fi-blog-form-page) {
+        overflow: hidden !important;
+    }
+
+    /* Tighten horizontal spacing for blog form pages so the form uses more
+       of the screen width. Resetting every layer between .fi-main and the
+       form to make sure no inherited padding/max-width is eating space. */
+    .fi-main:has(.fi-blog-form-page) {
+        padding: 0 !important;
+        max-width: none !important;
+        background-color: #F7F7F7 !important;
+    }
+
+    :is(.dark .fi-main:has(.fi-blog-form-page)) {
+        background-color: rgb(17 24 39) !important;
+    }
+
+    .fi-blog-form-page,
+    .fi-blog-form-page>.fi-page-header-main-ctn,
+    .fi-blog-form-page .fi-page-main,
+    .fi-blog-form-page .fi-page-content,
+    .fi-blog-form-page .fi-sc-form {
+        max-width: none !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    /* Between .fi-page-content and the 3-column sections grid sits a chain of
+       single-column pass-through wrappers, each a CSS grid. After a Livewire
+       re-render (typing / selecting a field) one of these wrappers ends up with
+       a CONTENT-SIZED column (~1237px) plus end-alignment instead of a full
+       1fr column — so the wrapper stays full width but parks its single column
+       on the right, collapsing the whole form to its intrinsic width and
+       leaving a big empty gap on the LEFT (the page header, outside this grid,
+       stays put). Forcing the grid ITEM to stretch can't help: it can only fill
+       its track, and the track itself is the collapsed 1237px. Fix: make these
+       pass-through wrappers block-level. A block element has no grid track to
+       collapse and no justify-content to right-align — its child simply fills
+       the width. The real 3-column grid (.lg:fi-grid-cols) and the field grids
+       inside it stay grids and are untouched. As plain CSS this holds across
+       every morph. */
+    .fi-blog-form-page .fi-page-content,
+    .fi-blog-form-page .fi-page-content>.fi-sc.fi-sc-has-gap,
+    .fi-blog-form-page .fi-sc-form>.fi-sc.fi-sc-has-gap {
+        display: block !important;
+    }
+
+    .fi-blog-form-page .fi-page-content>*,
+    .fi-blog-form-page .fi-sc-form {
+        width: 100% !important;
+        max-width: none !important;
+    }
+
+    /* Zero the column-gap on the single-column wrapper grids (no visible
+       effect since each has only one child, but it was producing visual
+       indent on the form). */
+    .fi-blog-form-page .fi-grid.fi-sc-has-gap:not(.lg\:fi-grid-cols) {
+        column-gap: 0 !important;
+    }
+
+    /* On the inner 3-column sections grid, restore a small gap so Blog
+       Configuration and Live Preview don't touch each other. */
+    .fi-blog-form-page .fi-grid.fi-sc-has-gap.lg\:fi-grid-cols {
+        column-gap: 1.5rem !important;
+    }
+
+    /* Lock the page to viewport height — no document-level scroll. */
+    .fi-blog-form-page {
+        height: calc(100vh - 64px);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .fi-blog-form-page>.fi-page-header-main-ctn {
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        padding: 0 !important;
+    }
+
+    /* Header sits at the top as a fixed-height flex item (not sticky — the
+       parent is already locked). Padding + shadow preserves breathing room. */
+    .fi-blog-form-page .fi-header {
+        flex: 0 0 auto;
+        background-color: #FFFFFF !important;
+        border-bottom: 2px solid #E7E7E7 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding: 1.5rem 2rem !important;
+        margin-bottom: 0 !important;
+        box-shadow: none !important;
+    }
+
+    :is(.dark .fi-blog-form-page .fi-header) {
+        background-color: rgb(17 24 39) !important;
+        border-bottom-color: rgb(31 41 55) !important;
+        box-shadow: none !important;
+    }
+
+    /* The form area fills remaining space and is the only scrollable region. */
+    .fi-blog-form-page .fi-page-main {
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .fi-blog-form-page .fi-page-content {
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+        padding: 0rem 2rem 2rem 2rem !important;
+    }
+
+    /* Live Preview pinned at the top of the form scroll container so it stays
+       visible while scrolling through both sections. Filament's DOM is:
+           .fi-grid-col (the grid item)
+             > .fi-sc-component (intermediate wrapper)
+                > .fi-sc-section.fi-blog-preview-sticky  (our marker)
+       :has(descendant) matches the preview's column, which then spans the left
+       column's rows so the sticky card has containing-block height to travel
+       through Blog Config AND SEO Config.
+
+       span 2 — NOT span 99. The grid has exactly two content rows
+       (grid-template-rows resolves to 1090px 393px). A span of 99 forces 99 row
+       tracks; rows 3-99 collapse to 0px, but the 1.5rem row-gap is still drawn
+       between every adjacent pair — 98 gaps x 24px ~= 2,350px of phantom scroll
+       height below the form. That was the "empty white space" bug. span 2
+       covers both real rows with a single gap and no phantom tracks.
+       (Bump to span 3 if a third full-width left-column section is ever added.) */
+    .fi-blog-form-page .fi-blog-preview-sticky {
+        position: sticky;
+        top: 0;
+    }
+
+    .fi-blog-form-page .fi-grid-col:has(.fi-blog-preview-sticky) {
+        grid-row: 1 / span 2;
+        grid-column: 3 / span 1;
+    }
+
+    /* Layout lock for blog view page: topbar sticks to top and page scrolls */
+    body:has(.fi-blog-view-page) {
+        overflow: hidden !important;
+    }
+
+    .fi-main:has(.fi-blog-view-page) {
+        padding: 0 !important;
+        max-width: none !important;
+        background-color: #F7F7F7 !important;
+    }
+
+    :is(.dark .fi-main:has(.fi-blog-view-page)) {
+        background-color: rgb(17 24 39) !important;
+    }
+
+    .fi-blog-view-page {
+        height: calc(100vh - 64px);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        max-width: none !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    .fi-blog-view-page>.fi-page-header-main-ctn {
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        padding: 0 !important;
+        max-width: none !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    .fi-blog-view-page .fi-page-main {
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        max-width: none !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    .fi-blog-view-page .fi-page-content {
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+        padding: 0 !important;
+        max-width: none !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    /* Native header styling for view page to mimic Figma layout exactly */
+    .fi-blog-view-page .fi-header {
+        flex: 0 0 auto;
+        background-color: #FFFFFF !important;
+        border-bottom: 1px solid #EDEDED !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding: 24px 32px !important;
+        margin-bottom: 0 !important;
+        box-shadow: none !important;
+    }
+
+    :is(.dark .fi-blog-view-page .fi-header) {
+        background-color: rgb(17 24 39) !important;
+        border-bottom-color: rgb(31 41 55) !important;
+        box-shadow: none !important;
+    }
+
+    .fi-blog-view-page .fi-header-subheading {
+        color: #777777 !important;
+        font-size: 16px !important;
+        font-family: 'Outfit', sans-serif !important;
+        margin-top: 8px !important;
+        max-width: 56rem !important;
+    }
+
+    :is(.dark .fi-blog-view-page .fi-header-subheading) {
+        color: #9ca3af !important;
+    }
+}
+
+/* Fix intermittent blank toast notifications in SPA mode.
+   Filament's .fi-no-notification uses overflow:hidden to clip the enter-animation
+   translate. In SPA mode, a second Livewire morph (triggered by the notification
+   event) can fire mid-page-transition, causing getComputedStyle() in notification.js
+   to capture a wrong display value. show() then sets that wrong value inline, and
+   overflow:hidden clips all inner content. Removing overflow:hidden prevents the
+   clipping — content stays visible even if flex layout is briefly wrong. The
+   enter-animation translate will briefly overshoot by ~48px but is imperceptible
+   at 300ms duration. */
+.fi-no-notification {
+    overflow: visible !important;
+}
+
+/* Dial code select: hide country name in selected state, show in dropdown */
+.fi-select-input-value-label .dial-country-name {
+    display: none;
+}
+
+/*
+ * Cities table: boxed map-pin avatar (light-blue rounded square) beside the
+ * city name, matching the design. The SVG fill is overridden to use --brand-primary.
+ */
+.city-pin-avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.625rem;
+    background-color: color-mix(in srgb, var(--brand-primary) 10%, white);
+    flex-shrink: 0;
+}
+
+.city-pin-avatar svg,
+.city-pin-avatar svg * {
+    color: var(--brand-primary) !important;
+    fill: var(--brand-primary) !important;
+}
+
+:is(.dark .city-pin-avatar) {
+    background-color: color-mix(in srgb, var(--brand-primary) 18%, transparent);
+}
+
+/* ============================================================
+ * Property Wizard Form — Figma section card style
+ * Sections become gray cards (#f7f7f7) with a white title pill
+ * ============================================================ */
+
+/* Each schema Section wrapper: gray card */
+.property-wizard-form .fi-section {
+    background-color: #f7f7f7 !important;
+    border-radius: 1rem !important;
+    padding: 1rem !important;
+    box-shadow: none !important;
+    outline: none !important;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Remove the default ring Filament puts on sections */
+.property-wizard-form .fi-section::before,
+.property-wizard-form .fi-section::after {
+    display: none !important;
+}
+
+/* Section header → white pill */
+.property-wizard-form .fi-section-header {
+    background-color: #ffffff !important;
+    border-radius: 0.75rem !important;
+    padding: 0.75rem !important;
+    gap: 0.5rem !important;
+    border-bottom: none !important;
+    margin-bottom: 0 !important;
+}
+
+/* Section heading text */
+.property-wizard-form .fi-section-header-heading {
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    line-height: 1.25rem !important;
+    color: #111827 !important;
+}
+
+/* Remove content container padding and the default header separator line */
+.property-wizard-form .fi-section-content-ctn {
+    padding: 0 !important;
+    border-top: none !important;
+}
+
+.property-wizard-form .fi-section-content {
+    padding: 0 !important;
+    display: flex;
+    flex-direction: column;
+    gap: 1.875rem;
+    /* 30px between form groups */
+}
+
+/* Dashboard view all bookings button hover style */
+.dashboard-view-all-btn:hover {
+    background-color: var(--brand-primary-light) !important;
+}
+
+/* Homepage add review card custom style */
+.homepage-add-review-card {
+    border-color: color-mix(in srgb, var(--brand-primary) 30%, transparent) !important;
+    background-color: color-mix(in srgb, var(--brand-primary-light) 60%, transparent) !important;
+}
+
+.homepage-add-review-card:hover {
+    border-color: var(--brand-primary) !important;
+    background-color: var(--brand-primary-light) !important;
+}
+
+/* Review selection stage cards inside modal */
+.stage-review-card-active {
+    border-color: var(--brand-primary) !important;
+    background-color: color-mix(in srgb, var(--brand-primary-light) 40%, transparent) !important;
+}
+
+.stage-review-card-inactive {
+    border-color: #e5e7eb !important;
+    background-color: #ffffff !important;
+}
+
+.stage-review-card-inactive:hover {
+    border-color: var(--brand-primary-light) !important;
+}
+
+/* Review selection checkbox inside modal */
+.stage-review-checkbox-active {
+    border-color: var(--brand-primary) !important;
+    background-color: var(--brand-primary) !important;
+}
+
+.stage-review-checkbox-inactive {
+    border-color: #d1d5db !important;
+    background-color: #ffffff !important;
+}
+
+/* Payment status card on booking view page */
+.payment-status-card:hover {
+    border-color: var(--brand-primary) !important;
+}
+
+.payment-status-card-link {
+    color: var(--brand-primary) !important;
+}
+
+.payment-status-card:hover .payment-status-card-link {
+    color: var(--brand-btn-hover) !important;
+}
+
+/* Global Table Header Background Override */
+.fi-ta-header-cell {
+    background-color: #F7F7F7 !important;
+}
+
+:is(.dark .fi-ta-header-cell) {
+    background-color: rgb(31 41 55) !important;
+}
+
+/* Global Topbar buttons & dropdown triggers styling */
+.topbar-btn {
+    background-color: #F7F7F7 !important;
+    border-color: #EDEDED !important;
+    transition: background-color 0.15s ease, border-color 0.15s ease !important;
+}
+
+.topbar-btn:hover {
+    background-color: #EDEDED !important;
+}
+
+:is(.dark .topbar-btn) {
+    background-color: rgb(31 41 55) !important;
+    border-color: rgb(55 65 81) !important;
+}
+
+:is(.dark .topbar-btn:hover) {
+    background-color: rgb(55 65 81) !important;
+}
+
+/* Figma dev tokens mapping for live website preview and cards */
+.bg-Colors-Shades-Neutral-N---50 {
+    background-color: #FFFFFF !important;
+}
+
+.bg-Colors-Shades-Neutral-N---950 {
+    background-color: #0c0a09 !important;
+}
+
+.text-Colors-Shades-Neutral-N---50 {
+    color: #f5f5f4 !important;
+}
+
+.text-Colors-Shades-Neutral-N---700 {
+    color: #57534e !important;
+}
+
+.text-Colors-Shades-Neutral-N---950 {
+    color: #0c0a09 !important;
+}
+
+.outline-Colors-Shades-Neutral-N---200 {
+    outline-color: #EDEDED !important;
+}
+
+.bg-Colors-Shades-Neutral-N---200 {
+    background-color: #EDEDED !important;
+}
+
+.bg-Colors-Shades-Theme-P---50 {
+    background-color: var(--brand-primary-light) !important;
+}
+
+.text-Colors-Shades-Theme-P---700 {
+    color: var(--brand-primary) !important;
+}
+
+.text-Colors-Primary {
+    color: var(--brand-primary) !important;
+}
+
+.bg-Colors-Primary {
+    background-color: var(--brand-btn) !important;
+}
+
+:is(.dark .bg-Colors-Shades-Neutral-N---50) {
+    background-color: rgb(31 41 55) !important;
+}
+
+:is(.dark .bg-Colors-Shades-Neutral-N---950) {
+    background-color: #f5f5f4 !important;
+}
+
+:is(.dark .text-Colors-Shades-Neutral-N---50) {
+    color: #0c0a09 !important;
+}
+
+:is(.dark .text-Colors-Shades-Neutral-N---700) {
+    color: rgb(156 163 175) !important;
+}
+
+:is(.dark .text-Colors-Shades-Neutral-N---950) {
+    color: #ffffff !important;
+}
+
+:is(.dark .outline-Colors-Shades-Neutral-N---200) {
+    outline-color: rgb(55 65 81) !important;
+}
+
+:is(.dark .bg-Colors-Shades-Neutral-N---200) {
+    background-color: rgb(31 41 55) !important;
+}
+
+:is(.dark .bg-Colors-Shades-Theme-P---50) {
+    background-color: color-mix(in srgb, var(--brand-primary) 20%, transparent) !important;
+}
+
+:is(.dark .text-Colors-Shades-Theme-P---700) {
+    color: var(--brand-primary) !important;
+}
+
+/* Swap modal buttons visually: Cancel on left, Submit on right */
+.swap-modal-buttons .fi-modal-footer-actions {
+    flex-direction: row-reverse !important;
+}
+
+.removal-request-modal .fi-modal-footer-actions {
+    display: flex !important;
+    gap: 0.75rem !important;
+}
+
+.removal-request-modal .fi-modal-footer-actions>* {
+    flex: 1 !important;
+}
+
+.removal-request-modal .fi-modal-footer-actions .fi-btn {
+    width: 100% !important;
+    justify-content: center !important;
+}
+
+/*
+ * Cancellation Policy create/edit modal — Figma card-style rule items:
+ * each rule in a bordered grey card, delete icon in a light-red box.
+ * The live "Preview: ..." row uses the native Callout component (already
+ * full-width with its own padding), so no extra styling is needed for it.
+ */
+.cancellation-policy-modal .fi-fo-repeater-item {
+    background-color: #F7F7F7;
+    border-radius: 0.75rem;
+    padding: 1rem;
+}
+
+:is(.dark .cancellation-policy-modal .fi-fo-repeater-item) {
+    background-color: rgb(31 41 55 / 0.5);
+}
+
+.cancellation-policy-modal .fi-fo-repeater-item-header-end-actions .fi-icon-btn {
+    background-color: rgb(254 226 226) !important;
+}
+
+:is(.dark .cancellation-policy-modal .fi-fo-repeater-item-header-end-actions .fi-icon-btn) {
+    background-color: rgb(127 29 29 / 0.4) !important;
+}
+
+/* ─── Mobile: horizontally scrollable tab strip ───────────────────────────── */
+@media (max-width: 1023px) {
+    .tab-scroll-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        /* hide scrollbar on mobile but keep functionality */
+        scrollbar-width: none;
+    }
+
+    .tab-scroll-wrapper::-webkit-scrollbar {
+        display: none;
+    }
+
+    .tab-pill-row {
+        /* prevent the pill row from wrapping or shrinking */
+        display: inline-flex !important;
+        flex-wrap: nowrap !important;
+        white-space: nowrap;
+        min-width: max-content;
+    }
+
+    .tab-pill-btn {
+        flex-shrink: 0;
+        white-space: nowrap;
+    }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+/* ─── Mobile: cancellation policy rule card ──────────────────────────────── */
+@media (max-width: 640px) {
+    .canc-rule-card {
+        /* let left and right sections each take a row */
+        align-items: flex-start;
+    }
+
+    .canc-rule-actions {
+        /* push actions to its own row, full-width, aligned right */
+        width: 100%;
+        justify-content: flex-end;
+        border-top: 1px solid #e5e7eb;
+        padding-top: 0.5rem;
+        margin-top: 0.25rem;
+    }
+}
+
+:is(.dark .canc-rule-actions) {
+    border-top-color: rgb(55 65 81);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+/* ─── Mobile: Property Contact & Bank Details fields ─────────────────────── */
+@media (max-width: 639px) {
+
+    .prop-contact-field,
+    .bank-detail-field {
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid #f3f4f6;
+    }
+
+    .prop-contact-field:last-child,
+    .bank-detail-field:last-child {
+        padding-bottom: 0;
+        border-bottom: none;
+    }
+}
+
+:is(.dark .prop-contact-field),
+:is(.dark .bank-detail-field) {
+    border-bottom-color: rgb(55 65 81);
+}
+
+:is(.dark .prop-contact-field:last-child),
+:is(.dark .bank-detail-field:last-child) {
+    border-bottom: none;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+/* ─── Mobile: Customer view page grids ───────────────────────────────────── */
+.customer-top-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+}
+
+.customer-stats-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+
+@media (min-width: 640px) {
+    .customer-top-grid {
+        grid-template-columns: 1fr 1.5fr;
+        gap: 24px;
+    }
+
+    .customer-stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+    }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+/* ─── Mobile: Refer & Earn page ──────────────────────────────────────────── */
+
+/* Stats grid: 1 col on mobile, 3 col at sm+ */
+.ref-stats-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+
+@media (min-width: 640px) {
+    .ref-stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+    }
+}
+
+/* Current Rules banner: stack vertically on mobile */
+.ref-rules-banner {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ref-edit-btn {
+    width: 100%;
+}
+
+@media (min-width: 640px) {
+    .ref-rules-banner {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .ref-edit-btn {
+        width: auto;
+        flex-shrink: 0;
+    }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+/* ─── Mobile: Customer Insights tab ──────────────────────────────────────── */
+
+/* Filter bar: stack filter controls above export button on mobile */
+.insights-filter-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Filter controls row: allow wrapping so select + date don't overflow */
+.insights-filter-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* Charts grid: single column on mobile */
+.insights-charts-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+}
+
+@media (min-width: 640px) {
+    .insights-filter-bar {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .insights-filter-controls {
+        flex-wrap: nowrap;
+    }
+
+    .insights-charts-grid {
+        grid-template-columns: 1.5fr 1fr;
+        gap: 24px;
+    }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+/* ─── Mobile: Facilities & Amenities page ────────────────────────────────── */
+
+/* Responsive facilities grid: 1-col on mobile, scale up at wider breakpoints */
+.fac-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.625rem;
+}
+
+@media (min-width: 480px) {
+    .fac-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .fac-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .fac-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+    }
+}
+
+/* Category header: on mobile, wrap actions to their own row */
+@media (max-width: 639px) {
+    .fac-cat-actions {
+        width: 100%;
+        border-top: 1px solid #f3f4f6;
+        padding-top: 0.625rem;
+        justify-content: flex-end;
+    }
+}
+
+:is(.dark .fac-cat-actions) {
+    border-top-color: rgb(55 65 81);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+/* ─── Mobile: Availability Calendar page ─────────────────────────────────── */
+/*
+ * Desktop pins the legend bar + footer to `position: fixed`, offset by the
+ * sidebar's live offsetWidth (via Alpine). Below the sidebar's collapse
+ * breakpoint (1024px) the sidebar goes off-canvas via `translateX`, not a
+ * width/display change, so offsetWidth still reports its full desktop width
+ * and wrongly shifts/narrows these bars. On mobile we drop the fixed
+ * docking entirely and let them flow normally at the end of the page.
+ */
+@media (max-width: 1023px) {
+
+    /* ── Property wizard: Facilities picker — horizontal tab layout ── */
+    .property-facilities-picker {
+        flex-direction: column !important;
+    }
+
+    .property-facilities-cats {
+        width: 100% !important;
+        border-right: none !important;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .property-facilities-cats-header {
+        display: none !important;
+        /* hide "CATEGORIES" label — obvious from context */
+    }
+
+    .property-facilities-cats-nav {
+        flex-direction: row !important;
+        overflow-x: auto !important;
+        scrollbar-width: none;
+        /* Firefox */
+        gap: 0;
+        padding: 0 8px 0;
+    }
+
+    .property-facilities-cats-nav::-webkit-scrollbar {
+        display: none;
+        /* Chrome/Safari */
+    }
+
+    /* Category buttons become compact horizontal pill-tabs */
+    .property-facilities-cat-btn {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 4px !important;
+        padding: 10px 14px !important;
+        border-left: none !important;
+        border-bottom: 2px solid transparent;
+        white-space: nowrap;
+        min-width: fit-content;
+    }
+
+    /* Active state: bottom border instead of left border */
+    .property-facilities-cat-btn.border-primary-600 {
+        border-bottom-color: var(--brand-primary, #2563eb) !important;
+        border-left-color: transparent !important;
+    }
+
+    /* Single column for facility checkboxes on mobile */
+    .property-facilities-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* ── Property wizard: hide step list by default, show when toggled ── */
+    .property-wizard-steps {
+        display: none !important;
+    }
+
+    .property-wizard-steps.mobile-open {
+        display: flex !important;
+    }
+
+    /* Sidebar + its backdrop must be above our fixed footer (z-39) and legend (z-40) */
+    .fi-sidebar.fi-main-sidebar {
+        z-index: 50 !important;
+    }
+
+    .fi-sidebar-close-overlay {
+        z-index: 50 !important;
+    }
+
+    #panel-footer {
+        position: static !important;
+        left: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+    }
+
+    .cal-legend-bar,
+    .grid-legend-bar {
+        position: static !important;
+        left: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        width: 100% !important;
+        flex-wrap: wrap;
+        border-radius: 0 !important;
+    }
+
+    .cal-legend-bar {
+        border-left: none;
+    }
+
+    .grid-legend-backdrop,
+    .cal-legend-spacer,
+    .grid-legend-spacer {
+        display: none !important;
+    }
+
+    .cal-date-controls {
+        flex-wrap: wrap;
+    }
+
+    .cal-search-wrap {
+        width: 100% !important;
+    }
+
+    /*
+     * The mobile off-canvas sidebar (.fi-sidebar) and its dimming backdrop
+     * (.fi-sidebar-close-overlay) both use z-index: 30. The calendar's sticky
+     * first column also uses z-30 to stay above booking blocks while
+     * scrolling, so when the drawer opens it wins the paint order (later in
+     * the DOM) and renders on top of the sidebar/backdrop. Drop it below 30
+     * on mobile only — it still only needs to clear the in-table content.
+     */
+    .cal-sticky-col {
+        z-index: 10 !important;
+    }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+/* ─── Livewire SPA navigation progress bar: thicker so it's harder to miss ── */
+/* Livewire injects #nprogress .bar with a hardcoded height: 2px (no !important)
+   via an inline <style> tag at runtime — override it here instead of touching vendor JS. */
+#nprogress .bar {
+    height: 4px !important;
+}
+
+/* ─── Success color: match Figma exact values ─────────────────────────────── */
+:root {
+    --success-50: #E5FAEF;
+    --success-600: #20B364;
+}
+
+/* ─── Badge style: match Figma rounded-rectangle shape ────────────────────── */
+/* Figma: rounded-lg (8px), fixed min-width, centered text, more padding       */
+/* Scoped to table cells only — avoids affecting filter-count or topbar badges  */
+.fi-ta-col .fi-badge,
+.fi-ta-text-item .fi-badge {
+    border-radius: 8px !important;
+    min-width: 80px !important;
+    justify-content: center !important;
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    line-height: 20px !important;
+}
+
+/* ─── FilePond Integrated Panel Modern Sleek Overlay Styling ───────────────────── */
+.filepond--root[data-style-panel-layout*='integrated'] .filepond--item {
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+}
+
+.filepond--root[data-style-panel-layout*='integrated'] .filepond--file-info {
+    display: none !important;
+}
+
+.filepond--root[data-style-panel-layout*='integrated'] .filepond--file-action-button {
+    background-color: rgba(0, 0, 0, 0.55) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    color: #ffffff !important;
+    border-radius: 9999px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    z-index: 20 !important;
+}
+
+.filepond--root[data-style-panel-layout*='integrated'] .filepond--file-action-button:hover {
+    background-color: rgba(0, 0, 0, 0.85) !important;
+    transform: scale(1.1) !important;
+}
+
+.filepond--root[data-style-panel-layout*='integrated'] .filepond--action-remove-item {
+    top: 8px !important;
+    left: 8px !important;
+}
+
+/* ─── Avatar Profile Upload - Larger Square with Rounded Corners ──────────── */
+.avatar-square-upload .filepond--root,
+.avatar-square-upload .filepond--panel-root,
+.avatar-square-upload .filepond--item,
+.avatar-square-upload .filepond--item-panel,
+.avatar-square-upload .filepond--image-preview,
+.avatar-square-upload .filepond--image-clip,
+.avatar-square-upload .filepond--file-wrapper,
+.avatar-square-upload .filepond--file {
+    border-radius: 16px !important;
+}
+
+.avatar-square-upload .filepond--root {
+    width: 140px !important;
+    height: 140px !important;
+    margin-bottom: 8px !important;
+}
+
+.avatar-square-upload .filepond--drop-label {
+    border-radius: 16px !important;
+    min-height: 140px !important;
+}
+
+/* Fused dial-code + phone control (Staff Create) — copied verbatim from
+ * resources/css/filament/partner/theme.css's phone-fused-group rules (the
+ * exact same CSS backing Partner Login's phone field, which is known-good),
+ * rather than a hand-rolled variant. Same class names on purpose, so this
+ * page renders through the identical, already-proven styling. */
+
+.fi-select-input .fi-dropdown-panel {
+    max-width: none !important;
+    min-width: 220px !important;
+}
+
+/*
+ * Select dropdown search box: Filament creates this as a bare
+ * <input class="fi-input"> with no wrapper, so it renders with no
+ * background/border and no icon by default. Add both to match designs that
+ * expect a proper search field (e.g. the "Search Country" box).
+ */
+.fi-select-input-search-ctn {
+    padding: 0.5rem !important;
+}
+
+.fi-select-input-search-ctn .fi-input {
+    background-color: rgb(243 244 246) !important;
+    border-radius: 0.5rem !important;
+    padding-inline-start: 2.25rem !important;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='2' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 0.75rem center;
+    background-size: 1rem 1rem;
+}
+
+:is(.dark .fi-select-input-search-ctn .fi-input) {
+    background-color: rgb(31 41 55) !important;
+}
+
+/* Select dropdown option rows: a little more breathing room than Filament's default p-2. */
+.fi-select-input-options-ctn .fi-dropdown-list-item {
+    padding: 0.625rem 0.75rem !important;
+}
+
+/* Select dropdown scrollbar: same thin gray treatment as the modal content area, instead of the unstyled native scrollbar. */
+.fi-select-input .fi-dropdown-panel::-webkit-scrollbar {
+    width: 6px;
+}
+
+.fi-select-input .fi-dropdown-panel::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.fi-select-input .fi-dropdown-panel::-webkit-scrollbar-thumb {
+    background-color: rgb(209 213 219);
+    border-radius: 3px;
+}
+
+:is(.dark .fi-select-input .fi-dropdown-panel::-webkit-scrollbar-thumb) {
+    background-color: rgb(75 85 99);
+}
+
+.joined-select-container .fi-input-wrp,
+.joined-input-container .fi-input-wrp {
+    box-shadow: none !important;
+    border: none !important;
+    --tw-ring-shadow: 0 0 #000 !important;
+    --tw-ring-color: transparent !important;
+    background-color: transparent !important;
+}
+
+.joined-select-container .fi-input-wrp:focus-within,
+.joined-input-container .fi-input-wrp:focus-within {
+    box-shadow: none !important;
+    border: none !important;
+    --tw-ring-shadow: 0 0 #000 !important;
+    --tw-ring-color: transparent !important;
+}
+
+/* Hide country name and code when selected (only show flag) */
+.phone-dial-code .dial-country-name,
+.phone-dial-code .dial-country-code {
+    display: none;
+}
+
+.phone-dial-code .fi-dropdown-panel .dial-country-name,
+.phone-dial-code .fi-dropdown-panel .dial-country-code {
+    display: inline;
+}
+
+/* Match FusedGroup outer ring color with custom input ring color */
+.fi-sc-fused-group>.fi-sc:not(:focus-within):not(.fi-invalid) {
+    --tw-ring-color: #555555 !important;
+}
+
+:is(.dark .fi-sc-fused-group > .fi-sc:not(:focus-within):not(.fi-invalid)) {
+    --tw-ring-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* Match the divider color inside FusedGroup to be slightly softer but consistent */
+.fi-sc-fused-group>.fi-sc {
+    border-radius: 8px !important;
+}
+
+/* Auto-size the left side based on its natural content without forcing a strict pixel width */
+.phone-fused-group>.fi-sc {
+    grid-template-columns: max-content 1fr !important;
+}
+
+/* Give the button natural padding and flex layout */
+.phone-fused-group .fi-select-input-btn {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    padding: 0 12px !important;
+}
+
+.phone-fused-group .fi-select-input-value-ctn {
+    flex: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+/* Protect the arrow from shrinking and give it a natural margin */
+.phone-fused-group .fi-input-wrp-suffix {
+    flex-shrink: 0 !important;
+    margin-left: 8px !important;
+}
+
+/* Add left padding to the inline prefix (+1) so it doesn't touch the divider */
+.phone-fused-group .fi-sc> :last-child .fi-input-wrp-prefix {
+    padding-left: 0.75rem !important;
+}
+
+/* Raw hand-written inputs (not rendered through Filament's own form component
+ * system) using Tailwind's `focus:ring-primary-500` fell back to Tailwind's
+ * built-in default blue ring color instead of the dynamic brand color —
+ * `border-primary-500`/`text-primary-500` resolve fine, but the `ring` utility
+ * has its own fallback behavior when its color variable doesn't chain through
+ * correctly. Bypassing that entirely by using the actual runtime CSS variable
+ * this app already injects from Setting::get('primary_color') (same one
+ * AdminPanelProvider's HEAD_END hook sets as --brand-primary). */
+.system-update-brand-input:focus {
+    outline: none !important;
+    border-color: var(--brand-primary, #1a73e8) !important;
+    box-shadow: 0 0 0 1px var(--brand-primary, #1a73e8) !important;
+}
+
+/* App-wide fix for the same bug class as above: any raw, hand-written element
+ * (not rendered through Filament's own form components) using a Tailwind
+ * `ring-primary-*` utility — bare, or with a focus:/hover:/focus-within:
+ * prefix — falls back to Tailwind's built-in default blue ring instead of
+ * chaining through to the dynamic brand color, even though `border-primary-*`
+ * and `text-primary-*` resolve correctly. A full codebase audit found ~25
+ * raw elements with this exact bug (inputs, selects, selection cards, hover
+ * avatars) across many unrelated pages. Rather than patch each one
+ * individually, this overrides the ring color variable directly for every
+ * shade actually in use, app-wide, so any current or future occurrence is
+ * covered. Bold shades (500/600) map to the full brand color; lighter shades
+ * (100/200/300/400) map to the lighter brand tint, matching how they're used
+ * (subtle selection/hover highlights vs. a bold focus ring). */
+.ring-primary-100,
+.ring-primary-200,
+.ring-primary-300,
+.focus\:ring-primary-100:focus,
+.focus\:ring-primary-200:focus,
+.focus\:ring-primary-300:focus,
+.hover\:ring-primary-400:hover,
+.focus-within\:ring-primary-200:focus-within {
+    --tw-ring-color: var(--brand-primary-light, #e8f1fd) !important;
+}
+
+.ring-primary-500,
+.ring-primary-600,
+.focus\:ring-primary-500:focus,
+.focus\:ring-primary-600:focus,
+.focus-within\:ring-primary-500:focus-within,
+.focus-within\:ring-primary-600:focus-within {
+    --tw-ring-color: var(--brand-primary, #1a73e8) !important;
+}
+
+:is(.dark .focus-within\:ring-primary-500:focus-within) {
+    --tw-ring-color: var(--brand-primary, #1a73e8) !important;
+}
+
+/* Report pages (AboveContentCollapsible filters): Filament renders the filter-fields panel and
+   its Filters toggle above the search/Columns/Exports toolbar. A relocated copy of both is
+   injected below the toolbar instead (see filament.tables.inline-filters-trigger/-panel +
+   AdminPanelProvider's TOOLBAR_COLUMN_MANAGER_TRIGGER_BEFORE/TOOLBAR_AFTER hooks), so the
+   original is hidden here to avoid showing it twice. The injected panel reuses the same
+   fi-ta-filters-above-content-ctn class for native styling, so :not() excludes it from the hide. */
+.fi-inline-filters-trigger .fi-ta-filters-above-content-ctn:not(.fi-inline-filters-panel) {
+    display: none;
+}
+
+.fi-inline-filters-trigger .fi-ta-filters-trigger-action-ctn {
+    display: none;
+}
+
+/* Flatpickr range picker (resources/js/date-range-filter.js): brand-color + dark-mode support.
+   Flatpickr's own theme is light-only and uses its own blue by default, so both need overriding
+   to match the rest of this admin panel's dynamic --brand-primary theming and dark mode. */
+.flatpickr-calendar {
+    font-family: inherit;
+    /* Matches the rest of this panel's cards/inputs (rounded-lg = 0.5rem), not flatpickr's
+       own smaller default radius. */
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.flatpickr-day {
+    border-radius: 9999px;
+}
+
+.flatpickr-day:hover {
+    background: var(--brand-primary-light, #e8f1fd);
+    border-color: var(--brand-primary-light, #e8f1fd);
+}
+
+.flatpickr-day.today {
+    border-color: var(--brand-primary, #1a73e8);
+}
+
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange {
+    background: var(--brand-primary, #1a73e8) !important;
+    border-color: var(--brand-primary, #1a73e8) !important;
+}
+
+.flatpickr-day.inRange {
+    background: var(--brand-primary-light, #e8f1fd) !important;
+    border-color: var(--brand-primary-light, #e8f1fd) !important;
+    box-shadow: -5px 0 0 var(--brand-primary-light, #e8f1fd), 5px 0 0 var(--brand-primary-light, #e8f1fd) !important;
+}
+
+:is(.dark .flatpickr-calendar) {
+    background: rgb(39 39 42);
+    border-color: rgb(63 63 70);
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+}
+
+:is(.dark .flatpickr-months .flatpickr-month),
+:is(.dark .flatpickr-current-month .flatpickr-monthDropdown-months),
+:is(.dark .flatpickr-current-month input.cur-year),
+:is(.dark .flatpickr-weekday) {
+    background: rgb(39 39 42);
+    color: rgb(244 244 245);
+    fill: rgb(244 244 245);
+}
+
+:is(.dark .flatpickr-day) {
+    color: rgb(244 244 245);
+}
+
+:is(.dark .flatpickr-day.flatpickr-disabled),
+:is(.dark .flatpickr-day.prevMonthDay),
+:is(.dark .flatpickr-day.nextMonthDay) {
+    color: rgb(82 82 91);
+}
+
+:is(.dark .flatpickr-day:hover) {
+    background: rgb(63 63 70);
+    border-color: rgb(63 63 70);
+}
+
+:is(.dark .flatpickr-prev-month svg),
+:is(.dark .flatpickr-next-month svg) {
+    fill: rgb(244 244 245);
+}
+
+/* Table "Total" summary row (report pages): Filament's default .fi-ta-text-summary
+   is a muted gray-500 with no font-weight boost — reads as *lighter* than a normal
+   row instead of standing out as the emphasized total. */
+.fi-ta-text-summary {
+    color: var(--gray-900) !important;
+    font-weight: 600 !important;
+}
+
+.dark .fi-ta-text-summary {
+    color: #ffffff !important;
+}
+
+/* Finance Summary Report's "Total" row: this report has no per-record Eloquent query (each row
+   is a computed calendar month), so it can't use Filament's built-in Summarizer total row above —
+   the row is appended to the record set directly instead and styled to match that same emphasis. */
+.fi-finance-summary-total-row {
+    background-color: var(--gray-50);
+    font-weight: 600;
+}
+
+.dark .fi-finance-summary-total-row {
+    background-color: rgb(39 39 42);
+}
